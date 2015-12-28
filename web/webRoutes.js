@@ -21,7 +21,7 @@ app.get('/', function(req, res) {
   res.render('pages/index');
 });
 
-app.get('/db', function (req, res) {
+app.get('/projects', function (req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query('SELECT * FROM projects', function(err, result) {
       done();

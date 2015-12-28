@@ -7,7 +7,7 @@ var expressValidator = require('express-validator');
 var app = module.exports = express();
 
 var projectRouter = express.Router();
-app.use('/project', projectRouter);
+app.use('/v1/projects', projectRouter);
 
 /* LOOK UP PROJECT BY ID MIDDLEWARE FUNCTION */
 function lookupProject(req, res, next) {
