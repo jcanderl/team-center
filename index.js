@@ -29,7 +29,7 @@ app.get('/', function(req, res) {
 
 app.get('/db', function (req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query('SELECT * FROM test_table', function(err, result) {
+    client.query('SELECT * FROM projects', function(err, result) {
       done();
       if (err)
        { console.error(err); res.send("Error " + err); }
