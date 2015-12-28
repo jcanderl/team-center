@@ -12,6 +12,9 @@
   },
   "author": "JC Anderl",
   "license": "ISC",
+  "engines": {
+    "node": "0.12.7"
+  },
   "bugs": {
     "url": "https://github.com/jcanderl/team-center/issues"
   },
