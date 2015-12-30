@@ -1,0 +1,38 @@
+<form>
+    <div>
+        <label>Project ID:</label>
+        <input type="text" name="projectID"/>
+    </div>
+    <div>
+        <label>Project Name:</label>
+        <input type="text" name="projectName"/>
+    </div>
+    <div>
+    <button onclick="myPostFunction()">Create Project</button>
+    </div>
+</form>
+
+<script>
+function myPostFunction() {        
+
+console.log('success');
+var request = require('request');
+
+request({
+    url: 'https://team-center2.herokuapp.com/v1/projects', //URL to hit
+    method: 'POST',
+    //Lets post the following key/values as form
+    json: {
+        id: '9',
+        name: 'success'
+    }
+}, function(error, response, body){
+    if(error) {
+        console.log(error);
+    } else {
+        console.log(response.statusCode, body);
+}
+});
+
+} //end myPostFunction 
+</script>
