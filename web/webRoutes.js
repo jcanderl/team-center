@@ -30,7 +30,6 @@ app.get('/projects', function (req, res) {
            if(error){          
                  console.log('There was an error');
            }else{
-                console.log(__dirname);
                 var Results = JSON.parse(body); 
                 res.render('pages/db', {results: Results} );
          }
