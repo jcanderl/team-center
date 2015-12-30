@@ -4,6 +4,7 @@ var pg = require('pg');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var passport = require('passport');
+var request = require('request');
 
 var app = module.exports = express();
 
@@ -22,6 +23,18 @@ app.get('/', function(req, res) {
 });
 
 app.get('/projects', function (req, res) {
+request.get("http://localhost:5000/v1/projects",function(error,response,body){
+           if(error){          
+                 console.log('There was an error');
+           }else{
+                var Results = JSON.parse(body); 
+                res.render('pages/db', {results: Results} );
+         }
+});
+});
+
+/*
+app.get('/projects', function (req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     client.query('SELECT * FROM projects', function(err, result) {
       done();
@@ -32,3 +45,4 @@ app.get('/projects', function (req, res) {
     });
   });
 })
+*/
