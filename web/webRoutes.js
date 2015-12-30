@@ -15,7 +15,7 @@ app.set('view engine', 'ejs');
 
 // Render Home Page
 app.get('/', function(req, res) {
-  res.render('pages/index');
+  res.render('pages/homepage');
 });
 
 // Send request to API to get all projects
