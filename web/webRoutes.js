@@ -7,6 +7,7 @@ var passport = require('passport');
 var request = require('request');
 
 var app = module.exports = express();
+var apiURL = 'https://team-center2.herokuapp.com/v1';
 
 app.use(bodyParser.json({ type: 'application/json' }));
 // We add the middleware after we load the body parser
@@ -23,8 +24,7 @@ app.get('/', function(req, res) {
 });
 
 app.get('/projects', function (req, res) {
-    var apiURL = 'https://team-center2.herokuapp.com/v1/projects';
-    request.get(apiURL, function(error,response,body){
+    request.get(apiURL+'/projects', function(error,response,body){
            if(error){          
                  console.log('There was an error');
            }else{
