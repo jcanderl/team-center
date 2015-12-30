@@ -25,7 +25,20 @@ app.get('/projects', function (req, res) {
                  console.log('There was an error');
            }else{
                 var Results = JSON.parse(body); 
-                res.render('pages/db', {results: Results} );
+                res.render('pages/allProjects', {results: Results} );
+         }
+});
+});
+
+// Send request to API to get one project by ID
+app.get('/projects/:id', function (req, res) {
+    var requestURL = apiURL + '/projects/' + req.params.id;
+    request.get(requestURL, function(error,response,body){
+           if(error){
+                 console.log('There was an error');
+           }else{
+                var Results = JSON.parse(body);
+                res.render('pages/oneProject', {results: Results} );
          }
 });
 });
