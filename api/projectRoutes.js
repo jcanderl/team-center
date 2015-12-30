@@ -1,15 +1,18 @@
 var express = require('express');
-var http = require('http');
 var pg = require('pg');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 
+// Use module exports 
 var app = module.exports = express();
 
+// Setup projectRouter
 var projectRouter = express.Router();
 app.use('/v1/projects', projectRouter);
 
-/* LOOK UP PROJECT BY ID MIDDLEWARE FUNCTION */
+/* MIDDLEWARE FUNCTIONS *******************************/
+
+// LOOK UP PROJECT BY ID
 function lookupProject(req, res, next) {
   var projectId = req.params.id;
   var sql = 'SELECT * FROM projects WHERE id = $1';
@@ -24,13 +27,13 @@ pg.connect(process.env.DATABASE_URL, function(err, client, done) {
       res.statusCode = 404;
       return res.json({ errors: ['Project not found']});
     }
-
     req.project = results.rows[0];
     next();
   });
  });
 }
 
+// VALIDATE PROJECT
 function validateProject(req, res, next) {
   req.checkBody('id', 'Invalid id').isNumeric();
   req.checkBody('name', 'Invalid name').notEmpty();
@@ -46,10 +49,9 @@ function validateProject(req, res, next) {
   return next();
  }
 
+/* PROJECT CRUD ***************************************/
 
-// PROJECT CRUD ************
-
-/* GET ALL PROJECTS */
+// GET ALL PROJECTS
 projectRouter.get('/', function(req, res) {
     var sql = 'SELECT * FROM projects'; 
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
@@ -66,12 +68,12 @@ projectRouter.get('/', function(req, res) {
   });
 });
 
-/* GET PROJECT BY ID */
+// GET PROJECT BY ID
 projectRouter.get('/:id([0-9]+)', lookupProject, function(req, res) {
   res.json(req.project);
 });
 
-/* POST NEW PROJECT */
+// POST NEW PROJECT
 projectRouter.post('/', validateProject, function(req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     var sql = "INSERT INTO projects (id, name) values ($1, $2) RETURNING id"; 
@@ -96,7 +98,7 @@ projectRouter.post('/', validateProject, function(req, res) {
 });
 
 
-/* DELETE PROJECT BY ID IN ROUTE */
+// DELETE PROJECT BY ID IN ROUTE
 projectRouter.delete('/:id', function(req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     var sql = "DELETE FROM projects WHERE id = $1 RETURNING id";
@@ -119,7 +121,7 @@ projectRouter.delete('/:id', function(req, res) {
   });  
 });
 
-/* DELETE PROJECT BY ID IN JSON */
+// DELETE PROJECT BY ID IN JSON
 projectRouter.delete('/', function(req, res) {
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
     var sql = "DELETE FROM projects WHERE id = $1 RETURNING id";

@@ -1,12 +1,12 @@
 var express = require('express');
-var http = require('http');
-var pg = require('pg');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var passport = require('passport');
 var request = require('request');
 
 var app = module.exports = express();
+
+// Set the base url for API
 var apiURL = 'https://team-center2.herokuapp.com/v1';
 
 app.use(bodyParser.json({ type: 'application/json' }));
@@ -19,10 +19,12 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+// Render Home Page
 app.get('/', function(req, res) {
   res.render('pages/index');
 });
 
+// Send request to API to get all projects
 app.get('/projects', function (req, res) {
     request.get(apiURL+'/projects', function(error,response,body){
            if(error){          
@@ -34,17 +36,3 @@ app.get('/projects', function (req, res) {
          }
 });
 });
-
-/*
-app.get('/projects', function (req, res) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query('SELECT * FROM projects', function(err, result) {
-      done();
-      if (err)
-       { console.error(err); res.send("Error " + err); }
-      else
-       { res.render('pages/db', {results: result.rows} ); }
-    });
-  });
-})
-*/
