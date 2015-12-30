@@ -1,6 +1,7 @@
 var express = require('express');
 var request = require('request');
 
+// Use module exports
 var app = module.exports = express();
 
 // Set the base url for API
