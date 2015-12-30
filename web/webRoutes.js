@@ -1,17 +1,10 @@
 var express = require('express');
-var bodyParser = require('body-parser');
-var expressValidator = require('express-validator');
-var passport = require('passport');
 var request = require('request');
 
 var app = module.exports = express();
 
 // Set the base url for API
 var apiURL = 'https://team-center2.herokuapp.com/v1';
-
-app.use(bodyParser.json({ type: 'application/json' }));
-// We add the middleware after we load the body parser
-app.use(expressValidator());
 
 app.use(express.static(__dirname + '/public'));
 
