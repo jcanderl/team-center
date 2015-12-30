@@ -23,10 +23,12 @@ app.get('/', function(req, res) {
 });
 
 app.get('/projects', function (req, res) {
-request.get("http://localhost:5000/v1/projects",function(error,response,body){
+    var apiURL = 'https://team-center2.herokuapp.com/v1/projects';
+    request.get(apiURL, function(error,response,body){
            if(error){          
                  console.log('There was an error');
            }else{
+                console.log(__dirname);
                 var Results = JSON.parse(body); 
                 res.render('pages/db', {results: Results} );
          }
